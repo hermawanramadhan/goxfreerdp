@@ -1,0 +1,16 @@
+# Binaries
+goxfreerdp
+goxfreerdp_test
+test_build
+bin/
+
+# IDEs
+.idea/
+.vscode/
+
+# Config & local test files
+config.json
+test.rdp
+*.log
+*.ppm
+*.png

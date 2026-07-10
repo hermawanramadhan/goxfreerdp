@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=GoXFreeRDP
+Comment=Launch Remote Desktop connections from .rdp files
+Exec=@BINDIR@/goxfreerdp %f
+Icon=network-server
+Terminal=false
+Type=Application
+Categories=Network;RemoteAccess;
+MimeType=application/x-rdp;
