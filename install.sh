@@ -127,8 +127,14 @@ fi
 
 if [ "$INSTALL_METHOD" = "1" ]; then
   echo ""
-  echo "Downloading latest GoXFreeRDP release binary..."
-  BINARY_URL="https://github.com/hermawanramadhan/goxfreerdp/releases/latest/download/goxfreerdp"
+  ARCH=$(uname -m)
+  BINARY_NAME="goxfreerdp-linux-amd64"
+  if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+    BINARY_NAME="goxfreerdp-linux-arm64"
+  fi
+
+  echo "Downloading latest GoXFreeRDP release binary ($BINARY_NAME)..."
+  BINARY_URL="https://github.com/hermawanramadhan/goxfreerdp/releases/latest/download/$BINARY_NAME"
   if command -v curl &>/dev/null; then
     curl -L -o goxfreerdp "$BINARY_URL"
   elif command -v wget &>/dev/null; then
