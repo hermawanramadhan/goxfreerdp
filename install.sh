@@ -45,8 +45,22 @@ if ! command -v xfreerdp &>/dev/null && ! command -v xfreerdp3 &>/dev/null; then
 fi
 
 # Execute Makefile installation
+echo ""
+echo "Select installation target:"
+echo " 1) Local user only (installs to ~/.local, does not require root privileges)"
+echo " 2) All users (installs to /usr/local, requires sudo/root privileges)"
+echo ""
+read -p "Choose option [1]: " INSTALL_OPT
+INSTALL_OPT=${INSTALL_OPT:-1}
+
 echo "Compiling and installing GoXFreeRDP..."
-make install
+if [ "$INSTALL_OPT" = "2" ]; then
+  echo "Installing system-wide for all users (using sudo)..."
+  sudo make install PREFIX=/usr/local
+else
+  echo "Installing for local user..."
+  make install PREFIX="$HOME/.local"
+fi
 
 echo ""
 echo "==========================================="

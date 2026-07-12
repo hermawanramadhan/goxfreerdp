@@ -51,7 +51,7 @@ Before building or installing, ensure you have the required build tools and libr
 ## Installation
 
 ### 1. Automated Script
-We provide a helper script that checks dependencies and installs the application locally for your user:
+We provide an interactive installer script that checks system requirements and prompts you to install either for your **local user only** (does not require root privileges) or **system-wide for all users** (using `sudo`):
 ```bash
 ./install.sh
 ```
