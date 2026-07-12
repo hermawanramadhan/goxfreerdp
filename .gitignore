@@ -1,7 +1,7 @@
 # Binaries
-goxfreerdp
-goxfreerdp_test
-test_build
+/goxfreerdp
+/goxfreerdp_test
+/test_build
 bin/
 
 # IDEs

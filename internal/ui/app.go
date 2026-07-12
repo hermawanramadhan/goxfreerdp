@@ -231,6 +231,22 @@ func (app *AppUI) BuildMainWindow() error {
 	win.Add(notebook)
 	app.Notebook = notebook
 
+	aboutBtn, err := gtk.ButtonNew()
+	if err == nil {
+		img, err := gtk.ImageNewFromIconName("help-about-symbolic", gtk.ICON_SIZE_MENU)
+		if err == nil {
+			aboutBtn.SetImage(img)
+			aboutBtn.SetAlwaysShowImage(true)
+		}
+		aboutBtn.SetRelief(gtk.RELIEF_NONE)
+		aboutBtn.SetTooltipText("About GoXFreeRDP")
+		aboutBtn.Connect("clicked", func() {
+			showAboutDialog(app.Window)
+		})
+		notebook.SetActionWidget(aboutBtn, gtk.PACK_END)
+		aboutBtn.ShowAll()
+	}
+
 	serversBox, err := gtk.BoxNew(gtk.ORIENTATION_VERTICAL, 10)
 	if err != nil {
 		return err
@@ -338,6 +354,8 @@ func (app *AppUI) BuildMainWindow() error {
 		showSettingsDialog(app)
 	})
 
+	// About button click is handled inline during creation
+
 	addBtn.Connect("clicked", func() {
 		showAddServerDialog(app)
 	})
@@ -383,6 +401,7 @@ func (app *AppUI) BuildMainWindow() error {
 	}
 
 	win.Connect("destroy", func() {
+		_ = os.Remove(GetSocketPath())
 		gtk.MainQuit()
 	})
 
@@ -656,7 +675,7 @@ func applySystemTheme(app *AppUI) {
 }
 
 // StartApp starts the GTK application
-func StartApp(cfg *config.AppConfig) error {
+func StartApp(cfg *config.AppConfig, initialRDPFile string) error {
 	gtk.Init(nil)
 	applySystemTheme(nil)
 	SetupCSS()
@@ -688,6 +707,28 @@ func StartApp(cfg *config.AppConfig) error {
 	}()
 
 	app.Window.ShowAll()
+
+	err = app.StartIPCServer()
+	if err != nil {
+		fmt.Printf("[IPC] Failed to start IPC server: %v\n", err)
+	}
+
+	if initialRDPFile != "" {
+		glib.IdleAdd(func() {
+			var dummyServer config.ServerConfig
+			dummyServer.HostIP = initialRDPFile
+			dummyServer.Name = filepath.Base(initialRDPFile)
+
+			if app.LogTextBuffer != nil {
+				endIter := app.LogTextBuffer.GetEndIter()
+				msg := fmt.Sprintf("[CLI Mode] Opening RDP connection from file: %s\n", initialRDPFile)
+				app.LogTextBuffer.Insert(endIter, msg)
+			}
+
+			app.RunConnectionWithAuthFallback(dummyServer)
+		})
+	}
+
 	gtk.Main()
 	return nil
 }

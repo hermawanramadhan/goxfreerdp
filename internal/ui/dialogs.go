@@ -57,7 +57,10 @@ func createHeaderLabel(text string) (*gtk.Label, error) {
 	if err != nil {
 		return nil, err
 	}
-	lbl.SetMarkup(fmt.Sprintf("<b><span size='large'>%s</span></b>", text))
+	escaped := strings.ReplaceAll(text, "&", "&amp;")
+	escaped = strings.ReplaceAll(escaped, "<", "&lt;")
+	escaped = strings.ReplaceAll(escaped, ">", "&gt;")
+	lbl.SetMarkup(fmt.Sprintf("<b><span size='large'>%s</span></b>", escaped))
 	lbl.SetHAlign(gtk.ALIGN_START)
 	lbl.SetMarginTop(12)
 	lbl.SetMarginBottom(6)
@@ -672,4 +675,25 @@ func promptPasswordDialog(parentWindow *gtk.Window, connectionName string) (stri
 	}
 
 	return "", false
+}
+
+// showAboutDialog displays the GTK About Dialog.
+func showAboutDialog(parent *gtk.Window) {
+	dialog, err := gtk.AboutDialogNew()
+	if err != nil {
+		fmt.Printf("Failed to create About dialog: %v\n", err)
+		return
+	}
+	defer dialog.Destroy()
+
+	dialog.SetTransientFor(parent)
+	dialog.SetProgramName("GoXFreeRDP")
+	dialog.SetVersion("v1.0.0")
+	dialog.SetComments("A modern GTK3 frontend for xfreerdp written in Go.")
+	dialog.SetWebsite("https://github.com/hermawanramadhan/goxfreerdp")
+	dialog.SetLicense("MIT License")
+	dialog.SetLogoIconName("network-server-symbolic")
+	dialog.SetAuthors([]string{"Hermawan Ramadhan"})
+
+	dialog.Run()
 }

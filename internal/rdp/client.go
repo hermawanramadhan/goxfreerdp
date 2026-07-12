@@ -249,20 +249,18 @@ func LaunchRDP(settings config.SettingsConfig, server config.ServerConfig, overr
 	go func() {
 		args := BuildArgs(settings, server, overrideHost)
 
-		// If we are loading a .rdp file and fullscreen is disabled, we rewrite the .rdp file
-		// to force windowed mode natively in FreeRDP by setting screen mode id to 1.
+		// If we are loading a .rdp file, we rewrite the .rdp file to ensure the screen mode
+		// matches the requested fullscreen setting (1 for windowed, 2 for fullscreen).
 		fullscreen := parseBoolOverride(server.Fullscreen, settings.Fullscreen)
-		if !fullscreen {
-			for i, arg := range args {
-				if strings.HasSuffix(strings.ToLower(arg), ".rdp") {
-					modifiedPath, err := createTempWindowedRdpFile(arg)
-					if err == nil {
-						args[i] = modifiedPath
-					} else {
-						fmt.Printf("[RDP Launch] Warning: Failed to create temp windowed RDP file: %v\n", err)
-					}
-					break
+		for i, arg := range args {
+			if strings.HasSuffix(strings.ToLower(arg), ".rdp") {
+				modifiedPath, err := createTempModifiedRdpFile(arg, fullscreen)
+				if err == nil {
+					args[i] = modifiedPath
+				} else {
+					fmt.Printf("[RDP Launch] Warning: Failed to create temp modified RDP file: %v\n", err)
 				}
+				break
 			}
 		}
 
@@ -335,8 +333,8 @@ func ParseRdpFile(filePath string) (string, error) {
 	return "", fmt.Errorf("could not find 'full address:s:' field in .rdp file")
 }
 
-// createTempWindowedRdpFile reads an RDP file, alters screen mode id:i:2 to 1 (forces windowed mode), and writes a temp copy.
-func createTempWindowedRdpFile(originalPath string) (string, error) {
+// createTempModifiedRdpFile reads an RDP file, alters screen mode id:i: to 1 (windowed) or 2 (fullscreen) based on the fullscreen flag, and writes a temp copy.
+func createTempModifiedRdpFile(originalPath string, fullscreen bool) (string, error) {
 	data, err := os.ReadFile(originalPath)
 	if err != nil {
 		return "", err
@@ -346,16 +344,21 @@ func createTempWindowedRdpFile(originalPath string) (string, error) {
 	lines := strings.Split(content, "\n")
 	hasScreenMode := false
 
+	targetMode := "1"
+	if fullscreen {
+		targetMode = "2"
+	}
+
 	for i, line := range lines {
 		trimmed := strings.TrimSpace(line)
 		if strings.HasPrefix(strings.ToLower(trimmed), "screen mode id:i:") {
-			lines[i] = "screen mode id:i:1"
+			lines[i] = "screen mode id:i:" + targetMode
 			hasScreenMode = true
 		}
 	}
 
 	if !hasScreenMode {
-		lines = append(lines, "screen mode id:i:1")
+		lines = append(lines, "screen mode id:i:"+targetMode)
 	}
 
 	modifiedContent := strings.Join(lines, "\n")
