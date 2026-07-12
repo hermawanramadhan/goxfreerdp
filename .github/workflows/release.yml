@@ -47,8 +47,6 @@ jobs:
           arch: aarch64
           distro: ubuntu_latest
           githubToken: ${{ github.token }}
-          setup: |
-            mkdir -p "${INPUTS_DIR}"
           run: |
             apt-get update
             apt-get install -y golang libgtk-3-dev pkg-config gcc
