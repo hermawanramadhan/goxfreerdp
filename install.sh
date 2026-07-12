@@ -8,40 +8,86 @@ echo "==========================================="
 echo "        GoXFreeRDP Installer"
 echo "==========================================="
 
-# Dependency checking helper
-check_dep() {
-  if ! command -v "$1" &>/dev/null; then
-    echo "Error: '$1' is required but not installed." >&2
-    return 1
-  fi
-}
-
-# Check build dependencies
-echo "Checking dependencies..."
-check_dep go || { echo "Please install Go: https://go.dev/doc/install"; exit 1; }
-check_dep pkg-config || { echo "Please install pkg-config using your package manager."; exit 1; }
-check_dep xdg-mime || { echo "xdg-mime is required for desktop file association."; exit 1; }
-
-# Check GTK 3 development headers
-if ! pkg-config --exists gtk+-3.0; then
-  echo "" >&2
-  echo "Error: GTK 3 development headers (gtk+-3.0) were not found." >&2
-  echo "Please install GTK 3 development files:" >&2
-  echo " - Debian/Ubuntu: sudo apt install libgtk-3-dev" >&2
-  echo " - Fedora/CentOS: sudo dnf install gtk3-devel" >&2
-  echo " - Arch Linux:    sudo pacman -S gtk3" >&2
-  exit 1
+# Detect package manager
+PM=""
+if [ -f /etc/debian_version ] || command -v apt-get &>/dev/null; then
+  PM="apt"
+elif [ -f /etc/fedora-release ] || [ -f /etc/redhat-release ] || command -v dnf &>/dev/null; then
+  PM="dnf"
+elif [ -f /etc/arch-release ] || command -v pacman &>/dev/null; then
+  PM="pacman"
 fi
 
-# Check RDP execution engine (xfreerdp)
+MISSING_PKGS=()
+
+# Check Go
+if ! command -v go &>/dev/null; then
+  if [ "$PM" = "apt" ]; then MISSING_PKGS+=("golang-go"); fi
+  if [ "$PM" = "dnf" ]; then MISSING_PKGS+=("golang"); fi
+  if [ "$PM" = "pacman" ]; then MISSING_PKGS+=("go"); fi
+fi
+
+# Check pkg-config
+if ! command -v pkg-config &>/dev/null; then
+  if [ "$PM" = "apt" ]; then MISSING_PKGS+=("pkg-config"); fi
+  if [ "$PM" = "dnf" ]; then MISSING_PKGS+=("pkg-config"); fi
+  if [ "$PM" = "pacman" ]; then MISSING_PKGS+=("pkgconf"); fi
+fi
+
+# Check GTK 3 Dev Headers
+if command -v pkg-config &>/dev/null; then
+  if ! pkg-config --exists gtk+-3.0 2>/dev/null; then
+    if [ "$PM" = "apt" ]; then MISSING_PKGS+=("libgtk-3-dev"); fi
+    if [ "$PM" = "dnf" ]; then MISSING_PKGS+=("gtk3-devel"); fi
+    if [ "$PM" = "pacman" ]; then MISSING_PKGS+=("gtk3"); fi
+  fi
+else
+  if [ "$PM" = "apt" ]; then MISSING_PKGS+=("libgtk-3-dev"); fi
+  if [ "$PM" = "dnf" ]; then MISSING_PKGS+=("gtk3-devel"); fi
+  if [ "$PM" = "pacman" ]; then MISSING_PKGS+=("gtk3"); fi
+fi
+
+# Check FreeRDP
 if ! command -v xfreerdp &>/dev/null && ! command -v xfreerdp3 &>/dev/null; then
-  echo "" >&2
-  echo "Warning: FreeRDP ('xfreerdp' or 'xfreerdp3') was not found in your PATH." >&2
-  echo "You must install FreeRDP to launch RDP connections." >&2
-  echo " - Debian/Ubuntu: sudo apt install freerdp2-x11" >&2
-  echo " - Fedora/CentOS: sudo dnf install freerdp" >&2
-  echo " - Arch Linux:    sudo pacman -S freerdp" >&2
-  echo "" >&2
+  if [ "$PM" = "apt" ]; then MISSING_PKGS+=("freerdp2-x11"); fi
+  if [ "$PM" = "dnf" ]; then MISSING_PKGS+=("freerdp"); fi
+  if [ "$PM" = "pacman" ]; then MISSING_PKGS+=("freerdp"); fi
+fi
+
+# Check xdg-mime
+if ! command -v xdg-mime &>/dev/null; then
+  if [ "$PM" = "apt" ]; then MISSING_PKGS+=("xdg-utils"); fi
+  if [ "$PM" = "dnf" ]; then MISSING_PKGS+=("xdg-utils"); fi
+  if [ "$PM" = "pacman" ]; then MISSING_PKGS+=("xdg-utils"); fi
+fi
+
+if [ ${#MISSING_PKGS[@]} -gt 0 ]; then
+  echo "The following missing system dependencies are required to build and run GoXFreeRDP:"
+  for pkg in "${MISSING_PKGS[@]}"; do
+    echo "  - $pkg"
+  done
+  echo ""
+  if [ -z "$PM" ]; then
+    echo "Error: Could not auto-detect package manager. Please install the packages listed above manually."
+    exit 1
+  fi
+
+  read -p "Would you like to install them automatically now? (y/n) [y]: " INSTALL_DEP
+  INSTALL_DEP=${INSTALL_DEP:-y}
+  if [ "$INSTALL_DEP" = "y" ] || [ "$INSTALL_DEP" = "Y" ]; then
+    echo "Installing missing dependencies (using sudo)..."
+    if [ "$PM" = "apt" ]; then
+      sudo apt-get update
+      sudo apt-get install -y "${MISSING_PKGS[@]}"
+    elif [ "$PM" = "dnf" ]; then
+      sudo dnf install -y "${MISSING_PKGS[@]}"
+    elif [ "$PM" = "pacman" ]; then
+      sudo pacman -S --noconfirm "${MISSING_PKGS[@]}"
+    fi
+  else
+    echo "Aborting. Missing dependencies are required to compile GoXFreeRDP."
+    exit 1
+  fi
 fi
 
 # Execute Makefile installation

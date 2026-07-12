@@ -18,7 +18,10 @@ GoXFreeRDP is a modern GTK3 GUI wrapper for `xfreerdp` (FreeRDP v2/v3) on Linux.
 
 ## Prerequisites
 
-Before building or installing, ensure you have the required build tools and libraries installed:
+Before building or installing, ensure you have the required build tools and libraries installed.
+
+> [!NOTE]
+> **Go** and **GTK3 Development Headers** are only required during the installation process because the application is compiled/built from source on your machine. Once installed, the compiled binary runs natively without requiring them.
 
 ### Build Dependencies:
 - **Go** (1.18 or higher)
@@ -51,7 +54,7 @@ Before building or installing, ensure you have the required build tools and libr
 ## Installation
 
 ### 1. Automated Script
-We provide an interactive installer script that checks system requirements and prompts you to install either for your **local user only** (does not require root privileges) or **system-wide for all users** (using `sudo`):
+We provide an interactive installer script that automatically detects and prompts you to install any missing dependencies (such as Go, GTK3 Dev Headers, FreeRDP, etc.) using your package manager. It then asks you whether to install GoXFreeRDP for your **local user only** (does not require root privileges) or **system-wide for all users** (using `sudo`):
 ```bash
 ./install.sh
 ```
