@@ -11,7 +11,7 @@ SRC = cmd/goxfreerdp/main.go
 
 all: build
 
-VERSION ?= dev
+VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
 LDFLAGS = -ldflags "-X 'goxfreerdp/internal/ui.Version=$(VERSION)'"
 
 build:
