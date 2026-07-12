@@ -2,6 +2,7 @@ package ui
 
 import (
 	"fmt"
+	"runtime"
 	"strings"
 	"time"
 
@@ -691,7 +692,7 @@ func showAboutDialog(parent *gtk.Window) {
 
 	dialog.SetTransientFor(parent)
 	dialog.SetProgramName("GoXFreeRDP")
-	dialog.SetVersion(Version)
+	dialog.SetVersion(fmt.Sprintf("%s (%s)", Version, runtime.GOARCH))
 	dialog.SetComments("A modern GTK3 frontend for xfreerdp written in Go.")
 	dialog.SetWebsite("https://github.com/hermawanramadhan/goxfreerdp")
 	dialog.SetLicense("MIT License")
