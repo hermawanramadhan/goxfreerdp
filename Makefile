@@ -1,4 +1,4 @@
-.PHONY: all build install uninstall clean
+.PHONY: all build install install-only uninstall clean
 
 PREFIX ?= $(HOME)/.local
 BINDIR = $(PREFIX)/bin
@@ -15,7 +15,9 @@ build:
 	@echo "Building $(TARGET)..."
 	go build -o $(TARGET) $(SRC)
 
-install: build
+install: build install-only
+
+install-only:
 	@echo "Installing binary to $(BINDIR)..."
 	mkdir -p $(BINDIR)
 	cp $(TARGET) $(BINDIR)/$(TARGET)
