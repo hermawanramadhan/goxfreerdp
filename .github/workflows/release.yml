@@ -27,7 +27,7 @@ jobs:
 
       - name: Build
         run: |
-          go build -o goxfreerdp-linux-amd64 cmd/goxfreerdp/main.go
+          go build -ldflags "-X 'goxfreerdp/internal/ui.Version=${{ github.ref_name }}'" -o goxfreerdp-linux-amd64 cmd/goxfreerdp/main.go
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -52,7 +52,7 @@ jobs:
           run: |
             apt-get update
             apt-get install -y golang libgtk-3-dev pkg-config gcc
-            go build -o goxfreerdp-linux-arm64 cmd/goxfreerdp/main.go
+            go build -ldflags "-X 'goxfreerdp/internal/ui.Version=${{ github.ref_name }}'" -o goxfreerdp-linux-arm64 cmd/goxfreerdp/main.go
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

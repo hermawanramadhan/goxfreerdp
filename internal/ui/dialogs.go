@@ -677,6 +677,9 @@ func promptPasswordDialog(parentWindow *gtk.Window, connectionName string) (stri
 	return "", false
 }
 
+// Version is the application version, injected at build time via ldflags.
+var Version = "v1.0.0"
+
 // showAboutDialog displays the GTK About Dialog.
 func showAboutDialog(parent *gtk.Window) {
 	dialog, err := gtk.AboutDialogNew()
@@ -688,7 +691,7 @@ func showAboutDialog(parent *gtk.Window) {
 
 	dialog.SetTransientFor(parent)
 	dialog.SetProgramName("GoXFreeRDP")
-	dialog.SetVersion("v1.0.0")
+	dialog.SetVersion(Version)
 	dialog.SetComments("A modern GTK3 frontend for xfreerdp written in Go.")
 	dialog.SetWebsite("https://github.com/hermawanramadhan/goxfreerdp")
 	dialog.SetLicense("MIT License")

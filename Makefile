@@ -11,9 +11,12 @@ SRC = cmd/goxfreerdp/main.go
 
 all: build
 
+VERSION ?= dev
+LDFLAGS = -ldflags "-X 'goxfreerdp/internal/ui.Version=$(VERSION)'"
+
 build:
 	@echo "Building $(TARGET)..."
-	go build -o $(TARGET) $(SRC)
+	go build $(LDFLAGS) -o $(TARGET) $(SRC)
 
 install: build install-only
 
