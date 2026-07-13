@@ -18,35 +18,48 @@ GoXFreeRDP is a modern GTK3 GUI wrapper for `xfreerdp` (FreeRDP v2/v3) on Linux.
 
 ## Prerequisites
 
-Before building or installing, ensure you have the required build tools and libraries installed.
+Depending on whether you use the precompiled binary or compile from source, you need different packages installed on your system.
 
-> [!NOTE]
-> **Go** and **GTK3 Development Headers** are only required during the installation process because the application is compiled/built from source on your machine. Once installed, the compiled binary runs natively without requiring them.
+### 1. If using the Precompiled Binary (Recommended)
+You only need the **runtime** dependencies. Golang and development headers are **NOT** required:
+* **FreeRDP** (either `xfreerdp` or `xfreerdp3` binary in your PATH)
+* **xdg-utils** (for MIME file association)
 
-### Build Dependencies:
-- **Go** (1.18 or higher)
-- **pkg-config**
-- **GTK 3 Development Headers**
-
-### Runtime Dependency:
-- **FreeRDP** (either `xfreerdp` or `xfreerdp3` binary in your PATH)
-
-### Installing Prerequisites:
-
-- **Ubuntu / Debian / Linux Mint:**
+Install runtime dependencies:
+* **Ubuntu / Debian / Linux Mint:**
   ```bash
   sudo apt update
-  sudo apt install golang-go libgtk-3-dev pkg-config freerdp2-x11
+  sudo apt install freerdp2-x11 xdg-utils
+  ```
+* **Fedora / RHEL:**
+  ```bash
+  sudo dnf install freerdp xdg-utils
+  ```
+* **Arch Linux:**
+  ```bash
+  sudo pacman -S freerdp xdg-utils
   ```
 
-- **Fedora / RHEL:**
-  ```bash
-  sudo dnf install golang gtk3-devel pkg-config freerdp
-  ```
+### 2. If Compiling from Source
+You need both the **build tools** (only required during compilation) and **runtime** dependencies:
+* **Go** (1.18 or higher)
+* **pkg-config**
+* **GTK 3 Development Headers**
+* **FreeRDP** & **xdg-utils** (runtime)
 
-- **Arch Linux:**
+Install build + runtime dependencies:
+* **Ubuntu / Debian / Linux Mint:**
   ```bash
-  sudo pacman -S go gtk3 pkgconf freerdp
+  sudo apt update
+  sudo apt install golang-go libgtk-3-dev pkg-config freerdp2-x11 xdg-utils
+  ```
+* **Fedora / RHEL:**
+  ```bash
+  sudo dnf install golang gtk3-devel pkg-config freerdp xdg-utils
+  ```
+* **Arch Linux:**
+  ```bash
+  sudo pacman -S go gtk3 pkgconf freerdp xdg-utils
   ```
 
 ---
