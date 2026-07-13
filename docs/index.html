@@ -252,6 +252,131 @@
         </div>
     </div>
 
+    <!-- Settings Dialog -->
+    <div id="dialog-settings" class="gtk-dialog-overlay">
+        <div class="gtk-dialog-window settings-window">
+            <div class="gtk-dialog-header">
+                <span>Settings</span>
+                <button class="gtk-dialog-close" id="btn-close-settings-dialog">&times;</button>
+            </div>
+            <div class="gtk-dialog-scrolled-body">
+                <!-- Group 1: Default Connection Options -->
+                <div class="gtk-settings-section">
+                    <div class="gtk-settings-section-title">Default Connection Options</div>
+                    <div class="gtk-form-grid">
+                        <div class="gtk-form-row">
+                            <label for="cfg-engine">RDP Engine</label>
+                            <select id="cfg-engine" class="gtk-select">
+                                <option value="xfreerdp">xfreerdp (v2)</option>
+                                <option value="xfreerdp3" selected>xfreerdp3 (v3)</option>
+                            </select>
+                        </div>
+                        <div class="gtk-form-row full-width">
+                            <label class="gtk-checkbox-label">
+                                <input type="checkbox" id="cfg-ignore-cert" checked> Ignore Certificate errors
+                            </label>
+                        </div>
+                        <div class="gtk-form-row">
+                            <label for="cfg-tls-level">TLS Security Level</label>
+                            <select id="cfg-tls-level" class="gtk-select">
+                                <option value="default">Default (1)</option>
+                                <option value="0">0 (Minimum security / SSL CTX level 0)</option>
+                                <option value="1">1 (Default OpenSSL level 1)</option>
+                                <option value="2">2 (OpenSSL level 2 - 112 bit security)</option>
+                                <option value="3">3 (OpenSSL level 3 - 128 bit security)</option>
+                                <option value="4">4 (OpenSSL level 4 - 192 bit security)</option>
+                                <option value="5">5 (OpenSSL level 5 - 256 bit security)</option>
+                            </select>
+                        </div>
+                        <div class="gtk-form-row">
+                            <label for="cfg-port">Default Port</label>
+                            <input type="text" id="cfg-port" class="gtk-input" placeholder="e.g. 3389" value="3389">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2: Redirections & Integration -->
+                <div class="gtk-settings-section">
+                    <div class="gtk-settings-section-title">Redirections & Integration</div>
+                    <div class="gtk-checkbox-list">
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-clipboard" checked> Enable clipboard redirection
+                        </label>
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-nla" checked> Enable Network Level Authentication (NLA)
+                        </label>
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-sound" checked> Redirect audio playback
+                        </label>
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-drive"> Share local home directory
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Group 3: Display Settings -->
+                <div class="gtk-settings-section">
+                    <div class="gtk-settings-section-title">Display Settings</div>
+                    <div class="gtk-checkbox-list">
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-fullscreen"> Start in fullscreen
+                        </label>
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-dynamic-res" checked> Dynamic resolution adjustment
+                        </label>
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-multimon"> Use multiple monitors
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Group 4: Performance & Experience -->
+                <div class="gtk-settings-section">
+                    <div class="gtk-settings-section-title">Performance & Experience</div>
+                    <div class="gtk-checkbox-list">
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-fonts" checked> Enable font smoothing
+                        </label>
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-wallpaper"> Enable desktop wallpaper
+                        </label>
+                        <label class="gtk-checkbox-label">
+                            <input type="checkbox" id="cfg-themes"> Enable desktop themes
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Group 5: Advanced Settings -->
+                <div class="gtk-settings-section">
+                    <div class="gtk-settings-section-title">Advanced Settings</div>
+                    <div class="gtk-form-grid">
+                        <div class="gtk-form-row">
+                            <label for="cfg-custom-params">Custom Parameters</label>
+                            <input type="text" id="cfg-custom-params" class="gtk-input" placeholder="e.g. /gdi:hw /network:lan" value="">
+                        </div>
+                        <div class="gtk-form-row">
+                            <label for="cfg-log-level">Log Level</label>
+                            <select id="cfg-log-level" class="gtk-select">
+                                <option value="default">Default</option>
+                                <option value="OFF">OFF (No logs)</option>
+                                <option value="FATAL">FATAL (Fatal errors only)</option>
+                                <option value="ERROR">ERROR (Errors only)</option>
+                                <option value="WARN">WARN (Warnings and errors)</option>
+                                <option value="INFO">INFO (Information, warnings, errors)</option>
+                                <option value="DEBUG">DEBUG (Detailed debug logs)</option>
+                                <option value="TRACE">TRACE (Maximum diagnostic logs)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gtk-dialog-footer">
+                <button class="gtk-btn" id="btn-cancel-settings">Cancel</button>
+                <button class="gtk-btn gtk-btn-suggested" id="btn-save-settings">Save</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Credential Fallback Prompt Dialog -->
     <div id="dialog-fallback" class="gtk-dialog-overlay">
         <div class="gtk-dialog-window fallback-window">
