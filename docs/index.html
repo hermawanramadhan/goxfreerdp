@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoXFreeRDP | Modern GTK3 GUI Wrapper for xfreerdp</title>
+    <meta name="description" content="GoXFreeRDP is a modern GTK3 GUI wrapper for xfreerdp (FreeRDP v2/v3) on Linux. It provides connection management, adaptive dark mode, credential fallback, and file manager integration.">
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <img src="assets/goxfreerdp_logo.png" alt="GoXFreeRDP Logo" class="brand-logo">
+                <span class="brand-name">GoXFreeRDP</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#showcase">Showcase</a>
+                <a href="#installation">Installation</a>
+                <a href="https://github.com/hermawanramadhan/goxfreerdp" target="_blank" class="github-btn">
+                    <svg class="svg-icon" viewBox="0 0 16 16" width="16" height="16">
+                        <path fill="currentColor" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                    </svg>
+                    GitHub
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <h1 class="hero-title">RDP Connections, <span class="gradient-text">Streamlined for Linux</span></h1>
+            <p class="hero-subtitle">
+                A premium, modern GTK3 GUI wrapper for <code>xfreerdp</code> (FreeRDP v2/v3). Save your connections, customize CLI overrides, and double-click RDP files to connect instantly.
+            </p>
+            
+            <div class="hero-cta-group">
+                <a href="#installation" class="btn btn-primary">Get Started</a>
+                <div class="quick-install">
+                    <code id="cmd-install">git clone https://github.com/hermawanramadhan/goxfreerdp.git</code>
+                    <button class="copy-btn" data-target="cmd-install" aria-label="Copy installation command">
+                        <svg class="svg-icon" viewBox="0 0 16 16" width="16" height="16">
+                            <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                            <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Features Badges -->
+            <div class="hero-badges">
+                <span class="hero-badge">📦 FreeRDP v2/v3</span>
+                <span class="hero-badge">🎨 GTK3 C-Bindings</span>
+                <span class="hero-badge">🚀 Zero Overhead wrapper</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Showcase Section -->
+    <section id="showcase" class="showcase-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Interactive Showcase</h2>
+                <p>Experience the application UI directly from your browser. Click elements to see how it works.</p>
+            </div>
+
+            <!-- Interactive App Window Mockup -->
+            <div class="mock-app-window">
+                <!-- GTK Title Bar -->
+                <div class="gtk-title-bar">
+                    <div class="gtk-title-info">
+                        <img src="assets/goxfreerdp_logo.png" alt="GoXFreeRDP" class="gtk-app-icon">
+                        <span>GoXFreeRDP</span>
+                    </div>
+                    <div class="gtk-window-controls">
+                        <button class="gtk-control-btn" aria-label="Minimize"></button>
+                        <button class="gtk-control-btn" aria-label="Maximize"></button>
+                        <button class="gtk-control-btn gtk-close" aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <!-- App Main Body -->
+                <div class="mock-app-body">
+                    <!-- Tabs Header -->
+                    <div class="gtk-notebook-header">
+                        <div class="gtk-tabs">
+                            <button id="tab-btn-servers" class="gtk-tab-btn active">Servers</button>
+                            <button id="tab-btn-logs" class="gtk-tab-btn">Connection Logs</button>
+                        </div>
+                        <button id="btn-about-app" class="gtk-about-btn" title="About GoXFreeRDP">
+                            <svg viewBox="0 0 16 16" width="14" height="14">
+                                <path fill="currentColor" fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z"></path>
+                                <path fill="currentColor" fill-rule="evenodd" d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.553.553 0 01-1.1 0L7.1 4.995z"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Tabs Content Container -->
+                    <div class="gtk-notebook-content">
+                        <!-- Tab 1: Servers List -->
+                        <div id="tab-content-servers" class="gtk-tab-content active">
+                            <div class="gtk-scrolled-window">
+                                <div class="gtk-list-box">
+                                    <!-- Row 1 -->
+                                    <div class="gtk-list-row" id="row-prod">
+                                        <div class="gtk-row-left">
+                                            <span class="gtk-server-icon">🖥️</span>
+                                            <div class="gtk-server-details">
+                                                <div class="gtk-server-name">Production Web Server</div>
+                                                <div class="gtk-server-badges">
+                                                    <span class="gtk-host">192.168.1.50</span>
+                                                    <span class="gtk-badge">👤 administrator</span>
+                                                    <span class="gtk-badge">⚙️ xfreerdp3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="gtk-btn-connect" onclick="simulateConnection('Production Web Server', '192.168.1.50', 'administrator', 'xfreerdp3')" title="Connect to Production Web Server">
+                                            <svg viewBox="0 0 16 16" width="12" height="12">
+                                                <path fill="currentColor" d="M3 2v12l10-6z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <!-- Row 2 -->
+                                    <div class="gtk-list-row" id="row-db">
+                                        <div class="gtk-row-left">
+                                            <span class="gtk-server-icon">🖥️</span>
+                                            <div class="gtk-server-details">
+                                                <div class="gtk-server-name">Staging DB Console</div>
+                                                <div class="gtk-server-badges">
+                                                    <span class="gtk-host">10.0.0.12</span>
+                                                    <span class="gtk-badge">👤 postgres</span>
+                                                    <span class="gtk-badge">⚙️ xfreerdp</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="gtk-btn-connect" onclick="simulateConnection('Staging DB Console', '10.0.0.12', 'postgres', 'xfreerdp')" title="Connect to Staging DB Console">
+                                            <svg viewBox="0 0 16 16" width="12" height="12">
+                                                <path fill="currentColor" d="M3 2v12l10-6z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <!-- Row 3 -->
+                                    <div class="gtk-list-row" id="row-dev">
+                                        <div class="gtk-row-left">
+                                            <span class="gtk-server-icon">🖥️</span>
+                                            <div class="gtk-server-details">
+                                                <div class="gtk-server-name">Development Workstation</div>
+                                                <div class="gtk-server-badges">
+                                                    <span class="gtk-host">192.168.10.100</span>
+                                                    <span class="gtk-badge">👤 developer</span>
+                                                    <span class="gtk-badge">⚙️ xfreerdp</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="gtk-btn-connect" onclick="simulateConnection('Development Workstation', '192.168.10.100', 'developer', 'xfreerdp')" title="Connect to Development Workstation">
+                                            <svg viewBox="0 0 16 16" width="12" height="12">
+                                                <path fill="currentColor" d="M3 2v12l10-6z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Bottom Action Bar -->
+                            <div class="gtk-action-bar">
+                                <button id="btn-add-server" class="gtk-btn gtk-btn-suggested">Add Server</button>
+                                <div class="gtk-action-right">
+                                    <button id="btn-open-rdp" class="gtk-btn">Open .rdp</button>
+                                    <button id="btn-settings" class="gtk-btn">Settings</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Connection Logs -->
+                        <div id="tab-content-logs" class="gtk-tab-content">
+                            <div class="gtk-log-view" id="log-console">
+                                <div class="console-placeholder">[Ready] Click the play button (▶) next to a server to initiate an RDP connection and view stdout/stderr logs.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dialog Mockups (Overlay modals for interactive experience) -->
+    <!-- Add Server Dialog -->
+    <div id="dialog-add-server" class="gtk-dialog-overlay">
+        <div class="gtk-dialog-window">
+            <div class="gtk-dialog-header">
+                <span>Add Server Config</span>
+                <button class="gtk-dialog-close" id="btn-close-add-dialog">&times;</button>
+            </div>
+            <div class="gtk-dialog-body">
+                <div class="gtk-form-group">
+                    <label for="srv-name">Server Profile Name</label>
+                    <input type="text" id="srv-name" placeholder="e.g., Office PC">
+                </div>
+                <div class="gtk-form-group">
+                    <label for="srv-host">Host / IP address</label>
+                    <input type="text" id="srv-host" placeholder="e.g., 192.168.1.100">
+                </div>
+                <div class="gtk-form-group">
+                    <label for="srv-user">Username (Optional)</label>
+                    <input type="text" id="srv-user" placeholder="e.g., administrator">
+                </div>
+                <div class="gtk-drawer">
+                    <button class="gtk-drawer-toggle" id="drawer-toggle-btn">
+                        <span>Advanced Parameters</span>
+                        <svg viewBox="0 0 16 16" width="12" height="12" id="drawer-arrow">
+                            <path fill="currentColor" fill-rule="evenodd" d="M1.25 5.25a.75.75 0 011.06 0L8 10.94l5.69-5.69a.75.75 0 111.06 1.06l-6.22 6.22a.75.75 0 01-1.06 0L1.25 6.31a.75.75 0 010-1.06z"></path>
+                        </svg>
+                    </button>
+                    <div class="gtk-drawer-content" id="advanced-drawer-content">
+                        <div class="gtk-checkbox-group">
+                            <label><input type="checkbox" checked> Clipboard Sharing (+clipboard)</label>
+                            <label><input type="checkbox" checked> Font Smoothing (+fonts)</label>
+                            <label><input type="checkbox"> Smartcard Redirection</label>
+                            <label><input type="checkbox"> Sound Redirection (/sound)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gtk-dialog-footer">
+                <button class="gtk-btn" id="btn-cancel-add">Cancel</button>
+                <button class="gtk-btn gtk-btn-suggested" id="btn-save-server">Save Server</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Dialog -->
+    <div id="dialog-about" class="gtk-dialog-overlay">
+        <div class="gtk-dialog-window about-window">
+            <div class="gtk-dialog-body about-body">
+                <img src="assets/goxfreerdp_logo.png" alt="GoXFreeRDP Icon" class="about-icon">
+                <h3>GoXFreeRDP</h3>
+                <span class="about-ver">v1.2.0</span>
+                <p class="about-desc">A beautiful, lightweight front-end for FreeRDP clients, written in Go and using GTK3 binding bindings.</p>
+                <p class="about-author">Created by Hermawan Ramadhan</p>
+            </div>
+            <div class="gtk-dialog-footer centered">
+                <button class="gtk-btn gtk-btn-suggested" id="btn-close-about">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Credential Fallback Prompt Dialog -->
+    <div id="dialog-fallback" class="gtk-dialog-overlay">
+        <div class="gtk-dialog-window fallback-window">
+            <div class="gtk-dialog-header warning-header">
+                <span>🔐 Authentication Required</span>
+            </div>
+            <div class="gtk-dialog-body">
+                <p>Connection to <strong id="fallback-srv-name">Server</strong> requested credentials or failed with authentication error. Please input password.</p>
+                <div class="gtk-form-group">
+                    <label for="fallback-username">Username</label>
+                    <input type="text" id="fallback-username" value="administrator">
+                </div>
+                <div class="gtk-form-group">
+                    <label for="fallback-password">Password</label>
+                    <input type="password" id="fallback-password" placeholder="Enter password...">
+                </div>
+            </div>
+            <div class="gtk-dialog-footer">
+                <button class="gtk-btn" id="btn-cancel-fallback">Cancel</button>
+                <button class="gtk-btn gtk-btn-suggested" id="btn-submit-fallback">Connect</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Powerful Integration</h2>
+                <p>Designed to bridge the power of command-line FreeRDP with the ease of desktop environments.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Connection Management</h3>
+                    <p>Save and organize multiple remote desktop profiles with customized user configurations and custom command-line overrides.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌗</div>
+                    <h3>Adaptive Dark Mode</h3>
+                    <p>Automatically syncs with your desktop's GTK light or dark mode theme in real-time for visual coherence.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔑</div>
+                    <h3>Credential Fallback</h3>
+                    <p>Catches authentication errors and triggers a native GTK prompt to insert passwords safely, rather than typing it in plaintext CLI.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📂</div>
+                    <h3>MIME Type Association</h3>
+                    <p>Double-click any <code>.rdp</code> configuration file in Dolphin, Nautilus, or Thunar to launch the connection session instantly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Parameter Overrides</h3>
+                    <p>Easily toggle features like sound redirection, clipboard synchronization, font smoothing, multi-monitor, or add direct CLI flags.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3>Live Console Output</h3>
+                    <p>Debug connection errors seamlessly. Built-in interactive console displays raw xfreerdp outputs in real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="installation-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Getting Started</h2>
+                <p>Choose your preferred installation method to get GoXFreeRDP set up on your machine.</p>
+            </div>
+
+            <!-- Install Tabs -->
+            <div class="install-tabs-container">
+                <div class="install-tab-headers">
+                    <button class="install-tab-hdr active" data-tab="tab-install-auto">Automated Installer</button>
+                    <button class="install-tab-hdr" data-tab="tab-install-source">Compile from Source</button>
+                    <button class="install-tab-hdr" data-tab="tab-install-binary">Precompiled Binary</button>
+                </div>
+                <div class="install-tab-contents">
+                    <!-- Tab 1: Auto Installer -->
+                    <div class="install-tab-content active" id="tab-install-auto">
+                        <p class="install-desc">Our interactive script checks dependencies, compiles/downloads, and configures icons and menu launchers automatically.</p>
+                        <div class="code-wrapper">
+                            <pre><code id="code-auto">git clone https://github.com/hermawanramadhan/goxfreerdp.git
+cd goxfreerdp
+chmod +x install.sh
+./install.sh</code></pre>
+                            <button class="copy-btn" data-target="code-auto" aria-label="Copy shell script commands">
+                                <svg class="svg-icon" viewBox="0 0 16 16" width="16" height="16">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab 2: Compile Source -->
+                    <div class="install-tab-content" id="tab-install-source">
+                        <p class="install-desc">Requires Go (1.18+), GTK3 dev libraries, pkg-config, and GCC. Install dependencies and compile using the Makefile:</p>
+                        <div class="code-wrapper">
+                            <pre><code id="code-source"># Ubuntu/Debian dependency setup
+sudo apt install golang-go libgtk-3-dev pkg-config freerdp2-x11 xdg-utils
+
+# Clone & compile manually
+git clone https://github.com/hermawanramadhan/goxfreerdp.git
+cd goxfreerdp
+make
+make install # Installs launcher & executable to local user</code></pre>
+                            <button class="copy-btn" data-target="code-source" aria-label="Copy manual compilation commands">
+                                <svg class="svg-icon" viewBox="0 0 16 16" width="16" height="16">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Precompiled Binary -->
+                    <div class="install-tab-content" id="tab-install-binary">
+                        <p class="install-desc">Download a precompiled asset matching your architecture directly from releases, rename it, and apply desktop integrations:</p>
+                        <div class="code-wrapper">
+                            <pre><code id="code-binary"># 1. Download release from github.com/hermawanramadhan/goxfreerdp/releases
+# 2. Extract and rename binary to 'goxfreerdp' in repo directory
+chmod +x goxfreerdp
+
+# 3. Apply user-space integrations (icons, .desktop launcher, file association)
+make install-only</code></pre>
+                            <button class="copy-btn" data-target="code-binary" aria-label="Copy precompiled binary setup commands">
+                                <svg class="svg-icon" viewBox="0 0 16 16" width="16" height="16">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <img src="assets/goxfreerdp_logo.png" alt="GoXFreeRDP Logo" class="footer-logo">
+                <div>
+                    <span class="footer-brand">GoXFreeRDP</span>
+                    <p class="footer-desc">GTK3 client wrapper for remote desktop connection on Linux</p>
+                </div>
+            </div>
+            <div class="footer-right">
+                <p>&copy; 2026 Hermawan Ramadhan. GoXFreeRDP is licensed under the <a href="https://github.com/hermawanramadhan/goxfreerdp/blob/main/LICENSE" target="_blank">MIT License</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="app.js"></script>
+</body>
+</html>
