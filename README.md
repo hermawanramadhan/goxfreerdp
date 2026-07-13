@@ -53,31 +53,56 @@ Before building or installing, ensure you have the required build tools and libr
 
 ## Installation
 
-### 1. Automated Script
-We provide an interactive installer script that lets you choose between:
-1. **Downloading a precompiled release binary** from GitHub (Recommended - fast, does not require compilation tools like Go or GTK3 development headers).
-2. **Compiling from source** (which will automatically detect and prompt to install any missing development dependencies like Go, GTK3 Dev Headers, etc. using your package manager).
+### 1. Automated Script (Recommended)
+We provide an interactive installer script that automatically detects and prompts you to install any missing runtime/development dependencies (such as FreeRDP, xdg-utils, Go, or GTK3 headers) using your package manager. 
 
-The script also prompts you to install either for your **local user only** (does not require root privileges) or **system-wide for all users** (using `sudo`):
+It lets you choose between:
+1. **Downloading a precompiled release binary** from GitHub (Recommended - fast, does not require compilation tools like Go or GTK3 development headers).
+2. **Compiling from source** (builds GoXFreeRDP locally on your machine).
+
+It also configures the desktop menu entries, icons, and `.rdp` file associations:
 ```bash
+git clone https://github.com/hermawanramadhan/goxfreerdp.git
+cd goxfreerdp
+chmod +x install.sh
 ./install.sh
 ```
 
 ### 2. Manual Compilation & Installation (using Makefile)
-To build the application without installing:
-```bash
-make
-```
+If you prefer compiling the application manually from source:
 
-To install the application in user-space (`~/.local/bin`):
-```bash
-make install
-```
+* **Build only** (binary remains in the current directory):
+  ```bash
+  make
+  ```
 
-To install the application system-wide (requires root privileges):
-```bash
-sudo make install PREFIX=/usr/local
-```
+* **Install for local user only** (installs to `~/.local/bin`):
+  ```bash
+  make install
+  ```
+
+* **Install system-wide for all users** (requires root privileges):
+  ```bash
+  sudo make install PREFIX=/usr/local
+  ```
+
+### 3. Manual Installation of Precompiled Binary
+If you downloaded a precompiled binary (`goxfreerdp-linux-amd64` or `goxfreerdp-linux-arm64`) from the GitHub Releases page:
+
+1. Rename the downloaded binary to **`goxfreerdp`** and place it in the root of the cloned repository.
+2. Grant executable permissions to the binary:
+   ```bash
+   chmod +x goxfreerdp
+   ```
+3. Install the binary along with the desktop launcher, icons, and MIME associations:
+   * **For local user only**:
+     ```bash
+     make install-only
+     ```
+   * **System-wide for all users**:
+     ```bash
+     sudo make install-only PREFIX=/usr/local
+     ```
 
 ---
 
